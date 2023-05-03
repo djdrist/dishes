@@ -1,8 +1,15 @@
+import { Container } from '@mui/material';
+import DishForm from './components/DishForm';
+
 const App = () => {
+	const handleSubmit = (values) => {
+		console.log(values);
+	};
+
 	return (
-		<div>
-			<h1>Dish Form</h1>
-		</div>
+		<Container>
+			<DishForm onSubmit={handleSubmit} />
+		</Container>
 	);
 };
 
