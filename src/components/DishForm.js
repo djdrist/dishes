@@ -3,13 +3,16 @@ import { Field, reduxForm, formValueSelector } from 'redux-form';
 import { Box, Button, Typography } from '@mui/material';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
+import Rating from '@mui/material/Rating';
 import MenuItem from 'material-ui/MenuItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import LocalPizzaIcon from '@mui/icons-material/LocalPizza';
 import SoupKitchenIcon from '@mui/icons-material/SoupKitchen';
 import BreakfastDiningIcon from '@mui/icons-material/BreakfastDining';
+import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 
 const validate = (values) => {
+	console.log(values);
 	const errors = {};
 	const requiredFields = ['name', 'type'];
 	if (values.type === 'pizza') {
@@ -19,11 +22,7 @@ const validate = (values) => {
 	} else if (values.type === 'sandwich') {
 		requiredFields.push('slices_of_bread');
 	}
-	const preparationTime = values.preparation_time.split(':');
-	const [hours, minutes, seconds] = preparationTime;
-	if (hours === '00' && minutes === '00' && seconds === '00') {
-		errors.preparation_time = 'Required';
-	}
+	if (+values.preparation_time.replace(/:/g, '') === 0) errors.preparation_time = 'Required';
 	requiredFields.forEach((field) => {
 		if (!values[field]) {
 			errors[field] = 'Required';
@@ -51,6 +50,27 @@ const renderSelectField = ({ input, label, meta: { touched, error }, children, .
 		children={children}
 		{...custom}
 	/>
+);
+
+const renderRatingField = ({ input, label, meta: { touched, error }, children, ...custom }) => (
+	<>
+		<Rating
+			{...input}
+			name={input.name + '-rating'}
+			onChange={(event, value) => {
+				input.onChange(value);
+			}}
+			{...custom}
+			errorText={touched && error}
+		/>
+		{touched && error && (
+			<Typography
+				variant='subtitle2'
+				color='error'>
+				{error}
+			</Typography>
+		)}
+	</>
 );
 
 const DishForm = (props) => {
@@ -86,11 +106,23 @@ const DishForm = (props) => {
 				);
 			case 'soup':
 				return (
-					<Field
-						name='spiciness_scale'
-						component={renderTextField}
-						label='spiciness scale'
-					/>
+					<Box
+						marginY={3}
+						textAlign='center'>
+						<Typography
+							variant='subtitle1'
+							margin={1}>
+							Spiciness scale
+						</Typography>
+						<Field
+							name='spiciness_scale'
+							component={renderRatingField}
+							label='spiciness scale'
+							max={10}
+							emptyIcon={<LocalFireDepartmentIcon />}
+							icon={<LocalFireDepartmentIcon />}
+						/>
+					</Box>
 				);
 			case 'sandwich':
 				return (
