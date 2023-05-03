@@ -4,7 +4,7 @@ You can check live version [HERE](http://hexocean.server547300.nazwa.pl).
 
 ## Installation
 
-### `npm install`
+### `npm install -f`
 
 Install all the required dependencies.
 
