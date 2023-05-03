@@ -11,13 +11,18 @@ import BreakfastDiningIcon from '@mui/icons-material/BreakfastDining';
 
 const validate = (values) => {
 	const errors = {};
-	const requiredFields = ['name', 'preparation_time', 'type'];
+	const requiredFields = ['name', 'type'];
 	if (values.type === 'pizza') {
 		requiredFields.push('no_of_slices', 'diameter');
 	} else if (values.type === 'soup') {
 		requiredFields.push('spiciness_scale');
 	} else if (values.type === 'sandwich') {
 		requiredFields.push('slices_of_bread');
+	}
+	const preparationTime = values.preparation_time.split(':');
+	const [hours, minutes, seconds] = preparationTime;
+	if (hours === '00' && minutes === '00' && seconds === '00') {
+		errors.preparation_time = 'Required';
 	}
 	requiredFields.forEach((field) => {
 		if (!values[field]) {
@@ -126,6 +131,8 @@ const DishForm = (props) => {
 							name='preparation_time'
 							component={renderTextField}
 							label='preparation time'
+							type='time'
+							step={1}
 						/>
 					</div>
 					<div>

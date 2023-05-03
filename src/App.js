@@ -8,7 +8,10 @@ const App = () => {
 
 	return (
 		<Container>
-			<DishForm onSubmit={handleSubmit} />
+			<DishForm
+				onSubmit={handleSubmit}
+				initialValues={{ preparation_time: '00:00:00' }}
+			/>
 		</Container>
 	);
 };
