@@ -1,9 +1,8 @@
 import { useSelector } from 'react-redux';
-import { Field, reduxForm, formValueSelector } from 'redux-form';
-import { Box, Button, Typography } from '@mui/material';
+import { Field, reduxForm, formValueSelector, submit } from 'redux-form';
+import { Box, Button, Typography, Rating, CircularProgress } from '@mui/material';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
-import Rating from '@mui/material/Rating';
 import MenuItem from 'material-ui/MenuItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import LocalPizzaIcon from '@mui/icons-material/LocalPizza';
@@ -12,7 +11,6 @@ import BreakfastDiningIcon from '@mui/icons-material/BreakfastDining';
 import LocalFireDepartmentIcon from '@mui/icons-material/LocalFireDepartment';
 
 const validate = (values) => {
-	console.log(values);
 	const errors = {};
 	const requiredFields = ['name', 'type'];
 	if (values.type === 'pizza') {
@@ -75,7 +73,7 @@ const renderRatingField = ({ input, label, meta: { touched, error }, children, .
 
 const DishForm = (props) => {
 	const dishTypes = ['pizza', 'soup', 'sandwich'];
-	const { handleSubmit, pristine, reset, submitting } = props;
+	const { handleSubmit, pristine, reset, submitting, loader } = props;
 	const type = useSelector((state) => formValueSelector('DishForm')(state, 'type'));
 
 	const extraFieldsForDish = () => {
@@ -138,8 +136,24 @@ const DishForm = (props) => {
 				break;
 		}
 	};
+
 	return (
 		<MuiThemeProvider>
+			{loader && (
+				<Box
+					position='absolute'
+					top={0}
+					left={0}
+					right={0}
+					bottom={0}
+					display='flex'
+					justifyContent='center'
+					alignItems='center'
+					zIndex={1000}
+					bgcolor='rgba(0,0,0,0.5)'>
+					<CircularProgress />
+				</Box>
+			)}
 			<Box
 				mt={5}
 				display='flex'
