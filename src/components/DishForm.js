@@ -5,6 +5,9 @@ import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import LocalPizzaIcon from '@mui/icons-material/LocalPizza';
+import SoupKitchenIcon from '@mui/icons-material/SoupKitchen';
+import BreakfastDiningIcon from '@mui/icons-material/BreakfastDining';
 
 const validate = (values) => {
 	const errors = {};
@@ -112,6 +115,7 @@ const DishForm = (props) => {
 					</Typography>
 					<div>
 						<Field
+							padding={5}
 							name='name'
 							component={renderTextField}
 							label='dish name'
@@ -133,7 +137,17 @@ const DishForm = (props) => {
 								<MenuItem
 									key={type}
 									value={type}
-									primaryText={type}
+									primaryText={
+										<Box
+											display='flex'
+											justifyContent='space-between'
+											margin={2}>
+											<Typography>{type.toUpperCase()}</Typography>
+											{type === 'pizza' && <LocalPizzaIcon />}
+											{type === 'soup' && <SoupKitchenIcon />}
+											{type === 'sandwich' && <BreakfastDiningIcon />}
+										</Box>
+									}
 								/>
 							))}
 						</Field>
@@ -145,8 +159,7 @@ const DishForm = (props) => {
 						mt={5}>
 						<Button
 							type='submit'
-							variant='contained'
-							disabled={pristine || submitting}>
+							variant='contained'>
 							Submit
 						</Button>
 						<Button
