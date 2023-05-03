@@ -6,7 +6,9 @@ You can check live version [HERE](https://github.com/facebook/create-react-app).
 
 ### `npm install`
 
-Installs all the required dependencies.
+Install all the required dependencies.
+
+## Run
 
 ### `npm start`
 
