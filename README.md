@@ -1,6 +1,6 @@
 # Send details about Your favorite dish
 
-You can check live version [HERE](https://github.com/facebook/create-react-app).
+You can check live version [HERE](http://hexocean.server547300.nazwa.pl).
 
 ## Installation
 

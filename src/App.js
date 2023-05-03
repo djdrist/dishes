@@ -12,10 +12,11 @@ const App = () => {
 	const dispatch = useDispatch();
 
 	const handleSubmit = async (values) => {
+		const preparation_time = values.preparation_time.split(':').length === 2 ? `${values.preparation_time}:00` : values.preparation_time;
 		const newDish = {
 			name: values.name,
 			type: values.type,
-			preparation_time: values.preparation_time,
+			preparation_time,
 		};
 		if (values.type === 'pizza') {
 			newDish.no_of_slices = values.no_of_slices;
